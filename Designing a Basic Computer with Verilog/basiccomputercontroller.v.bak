@@ -1,0 +1,254 @@
+module basiccomputercontroller(
+  clk,
+  rst,
+  memory_we,
+  write_en_AR,
+  increment_AR,
+  write_en_TR,
+  increment_TR,
+  increment_IR,
+  write_en_IR,
+  increment_AC,
+  write_en_AC,
+  increment_DR,
+  write_en_DR,
+  increment_PC,
+  write_en_PC,
+  ALU_OP,
+  in0,
+  slect,
+  ALU_CO,
+  ALU_OVF,
+  ALU_N,
+  ALU_Z
+);
+
+// Inputs
+input wire clk;
+input wire rst;
+input wire memory_we;
+input wire write_en_AR;
+input wire increment_AR;
+input wire write_en_TR;
+input wire increment_TR;
+input wire increment_IR;
+input wire write_en_IR;
+input wire increment_AC;
+input wire write_en_AC;
+input wire increment_DR;
+input wire write_en_DR;
+input wire increment_PC;
+input wire write_en_PC;
+input wire [2:0] ALU_OP;
+input wire [15:0] in0;
+input wire [2:0] slect;
+
+// Outputs
+output wire ALU_CO;
+output wire ALU_OVF;
+output wire ALU_N;
+output wire ALU_Z;
+
+// Internal signals
+wire [15:0] arg;
+
+// Register instances
+registers b2v_AC(
+  .clk(clk),
+  .reset(rst),
+  .write_en(write_en_AC),
+  .increment(increment_AC),
+  .data(SYNTHESIZED_WIRE_0),
+  .out(SYNTHESIZED_WIRE_20));
+  defparam b2v_AC.W = 16;
+
+registers b2v_AR(
+  .clk(clk),
+  .reset(rst),
+  .write_en(write_en_AR),
+  .increment(increment_AR),
+  .data(SYNTHESIZED_WIRE_19),
+  .out(arg));
+  defparam b2v_AR.W = 16;
+
+registers b2v_DR(
+  .clk(clk),
+  .reset(rst),
+  .write_en(write_en_DR),
+  .increment(increment_DR),
+  .data(SYNTHESIZED_WIRE_21),
+  .out(SYNTHESIZED_WIRE_7));
+  defparam b2v_DR.W = 16;
+
+registers b2v_IR(
+  .clk(clk),
+  .reset(rst),
+  .write_en(write_en_IR),
+  .increment(increment_IR),
+  .data(SYNTHESIZED_WIRE_11),
+  .out(SYNTHESIZED_WIRE_12));
+  defparam b2v_IR.W = 16;
+
+registers b2v_PC(
+  .clk(clk),
+  .reset(rst),
+  .write_en(write_en_PC),
+  .increment(increment_PC),
+  .data(SYNTHESIZED_WIRE_10),
+  .out(SYNTHESIZED_WIRE_11));
+  defparam b2v_PC.W = 16;
+
+registers b2v_TR(
+  .clk(clk),
+  .reset(rst),
+  .write_en(write_en_TR),
+  .increment(increment_TR),
+  .data(SYNTHESIZED_WIRE_20),
+  .out(SYNTHESIZED_WIRE_21));
+  defparam b2v_TR.W = 16;
+
+// ALU instance
+alu b2v_ALU(
+  .clk(clk),
+  .rst(rst),
+  .a(in0),
+  .b(arg),
+  .c_in(SYNTHESIZED_WIRE_3),
+  .sel(slect),
+  .op(ALU_OP),
+  .co(ALU_CO),
+  .ovf(ALU_OVF),
+  .n(ALU_N),
+  .z(ALU_Z));
+  defparam b2v_ALU.W = 16;
+
+// Controller logic
+always @(posedge clk) begin
+  if (rst) begin
+    // Reset the controller state
+    memory_we <= 0;
+    write_en_AC <= 0;
+    increment_AC <= 0;
+    write_en_AR <= 0;
+    increment_AR <= 0;
+    write_en_DR <= 0;
+    increment_DR <= 0;
+    write_en_IR <= 0;
+    increment_IR <= 0;
+    write_en_PC <= 0;
+    increment_PC <= 0;
+    write_en_TR <= 0;
+    increment_TR <= 0;
+    slect <= 0;
+  end else begin
+    // Update the controller state based on the current instruction
+    case (SYNTHESIZED_WIRE_12)
+      // ADD instruction
+      16'b0000000000000001: begin
+        memory_we <= 0;
+        write_en_AC <= 1;
+        increment_AC <= 0;
+        write_en_AR <= 0;
+        increment_AR <= 0;
+        write_en_DR <= 0;
+        increment_DR <= 0;
+        write_en_IR <= 0;
+        increment_IR <= 1;
+        write_en_PC <= 0;
+        increment_PC <= 0;
+        write_en_TR <= 0;
+        increment_TR <= 0;
+        slect <= 3'b000;
+      end
+      // AND instruction
+      16'b0000000000000010: begin
+        memory_we <= 0;
+        write_en_AC <= 1;
+        increment_AC <= 0;
+        write_en_AR <= 0;
+        increment_AR <= 0;
+        write_en_DR <= 0;
+        increment_DR <= 0;
+        write_en_IR <= 0;
+        increment_IR <= 1;
+        write_en_PC <= 0;
+        increment_PC <= 0;
+        write_en_TR <= 0;
+        increment_TR <= 0;
+        slect <= 3'b001;
+      end
+      // JMP instruction
+      16'b0000000000000100: begin
+        memory_we <= 0;
+        write_en_AC <= 0;
+        increment_AC <= 0;
+        write_en_AR <= 0;
+        increment_AR <= 0;
+        write_en_DR <= 0;
+        increment_DR <= 0;
+        write_en_IR <= 0;
+        increment_IR <= 0;
+        write_en_PC <= 1;
+        increment_PC <= 0;
+        write_en_TR <= 0;
+        increment_TR <= 0;
+        slect <= 0;
+      end
+      // JN instruction
+      16'b0000000000001000: begin
+        memory_we <= 0;
+        write_en_AC <= 0;
+        increment_AC <= 0;
+        write_en_AR <= 0;
+        increment_AR <= 0;
+        write_en_DR <= 0;
+        increment_DR <= 0;
+        write_en_IR <= 0;
+        increment_IR <= 0;
+        write_en_PC <= 1;
+        increment_PC <= 0;
+        write_en_TR <= 0;
+        increment_TR <= 0;
+        slect <= 0;
+      end
+      // LOAD instruction
+      16'b0000000000010000: begin
+        memory_we <= 0;
+        write_en_AC <= 1;
+        increment_AC <= 0;
+        write_en_AR <= 1;
+        increment_AR <= 0;
+        write_en_DR <= 1;
+        increment_DR <= 0;
+        write_en_IR <= 0;
+        increment_IR <= 1;
+        write_en_PC <= 0;
+        increment_PC <= 0;
+        write_en_TR <= 0;
+        increment_TR <= 0;
+        slect <= 0;
+      end
+      // STORE instruction
+      16'b0000000000100000: begin
+        memory_we <= 1;
+        write_en_AC <= 0;
+        increment_AC <= 0;
+        write_en_AR <= 1;
+        increment_AR <= 0;
+        write_en_DR <= 1;
+        increment_DR <= 0;
+        write_en_IR <= 0;
+        increment_IR <= 1;
+        write_en_PC <= 0;
+        increment_PC <= 0;
+        write_en_TR <= 0;
+        increment_TR <= 0;
+        slect <= 0;
+      end
+    endcase
+  end
+end
+
+endmodule
+
+

@@ -1,0 +1,173 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "ALU_CO",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_OVF",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_N",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_Z",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_OP[2]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_OP[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU_OP[0]",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "slect[2]",
+					"strict" : false
+				},
+				{
+					"name" : "slect[0]",
+					"strict" : false
+				},
+				{
+					"name" : "slect[1]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[15]",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				},
+				{
+					"name" : "write_en_DR",
+					"strict" : false
+				},
+				{
+					"name" : "increment_DR",
+					"strict" : false
+				},
+				{
+					"name" : "write_en_AC",
+					"strict" : false
+				},
+				{
+					"name" : "increment_AC",
+					"strict" : false
+				},
+				{
+					"name" : "write_en_IR",
+					"strict" : false
+				},
+				{
+					"name" : "increment_IR",
+					"strict" : false
+				},
+				{
+					"name" : "write_en_TR",
+					"strict" : false
+				},
+				{
+					"name" : "increment_TR",
+					"strict" : false
+				},
+				{
+					"name" : "write_en_PC",
+					"strict" : false
+				},
+				{
+					"name" : "increment_PC",
+					"strict" : false
+				},
+				{
+					"name" : "write_en_AR",
+					"strict" : false
+				},
+				{
+					"name" : "increment_AR",
+					"strict" : false
+				},
+				{
+					"name" : "in0[5]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[11]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[0]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[1]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[2]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[3]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[4]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[6]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[7]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[8]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[9]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[10]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[12]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[13]",
+					"strict" : false
+				},
+				{
+					"name" : "in0[14]",
+					"strict" : false
+				},
+				{
+					"name" : "memory_we",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

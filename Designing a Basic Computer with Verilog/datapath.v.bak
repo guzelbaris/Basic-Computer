@@ -1,0 +1,99 @@
+module datapath #(
+    parameter integer W=16
+) (
+    input wire clk,
+    input wire reset,
+    input wire [2:0] opcode, // opcode for ALU operation
+    input wire [W-1:0] AC, // accumulator
+    input wire [W-1:0] DR, // data register
+    input wire [3:0] data_select, // data multiplexer select inputs
+    input wire [3:0] result_select, // result multiplexer select inputs
+    output reg [W-1:0] RES, // result of ALU operation
+    output reg CO, // carry-out flag
+    output reg OVF, // overflow flag
+    output reg N, // negative flag
+    output reg Z // zero flag
+);
+
+// Declare instances of the ALU and data_Mux_8x1 modules
+ALU #(W) ALU_inst (
+    .AC(AC),
+    .DR(DR),
+    .E(0), // not used in this example
+    .OP(opcode),
+    .RES(ALU_result),
+    .CO(ALU_CO),
+    .OVF(ALU_OVF),
+    .N(ALU_N),
+    .Z(ALU_Z)
+);
+
+data_Mux_8x1 #(W) data_Mux (
+    .Selection(data_select),
+    .Input0(AC),
+    .Input1(DR),
+    .Input2(ALU_result),
+    .Input3(0), // not used in this example
+    .Input4(0), // not used in this example
+    .Input5(0), // not used in this example
+    .Input6(0), // not used in this example
+    .Input7(0), // not used in this example
+    .Output(data_in)
+);
+
+data_Mux_8x1 #(W) result_Mux (
+    .Selection(result_select),
+    .Input0(AC),
+    .Input1(DR),
+    .Input2(ALU_result),
+    .Input3(0), // not used in this example
+    .Input4(0), // not used in this example
+    .Input5(0), // not used in this example
+    .Input6(0), // not used in this example
+    .Input7(0), // not used in this example
+    .Output(RES)
+);
+
+// Declare registers to hold the result and flags from the ALU
+registers #(W) result_reg (
+    .clk(clk),
+    .reset(reset),
+    .write_en(1'b1), // always write to the register
+    .data_in(data_in),
+    .data_out(RES)
+);
+
+registers #(1) CO_reg (
+    .clk(clk),
+    .reset(reset),
+    .write_en(1'b1), // always write to the register
+    .data_in(ALU_CO),
+    .data_out(CO)
+);
+
+registers #(1) OVF_reg (
+    .clk(clk),
+    .reset(reset),
+    .write_en(1'b1), // always write to the register
+    .data_in(ALU_OVF),
+    .data_out(OVF)
+);
+
+registers #(1) N_reg (
+    .clk(clk),
+    .reset(reset),
+    .write_en(1'b1), // always write to the register
+    .data_in(ALU_N),
+    .data_out(N)
+);
+
+registers #(1) Z_reg (
+    .clk(clk),
+    .reset(reset),
+    .write_en(1'b1), // always write to the register
+    .data_in(ALU_Z),
+    .data_out(Z)
+);
+
+endmodule
+

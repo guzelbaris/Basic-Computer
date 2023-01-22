@@ -1,0 +1,25 @@
+module data_Mux_8x1(
+  parameter W=16, // data width of input
+  input [2:0] sel, // select inputs
+  input [(W-1):0] a,
+  input [(W-1):0] b,
+  input [(W-1):0] c,
+  input [(W-1):0] d,
+  input [(W-1):0] e,
+  input [(W-1):0] f,
+  input [(W-1):0] g,
+  input [(W-1):0] h,
+  output [(W-1):0] out // output
+);
+
+// Set output to the selected input
+assign out = (sel == 3'b000) ? a :
+             (sel == 3'b001) ? b :
+             (sel == 3'b010) ? c :
+             (sel == 3'b011) ? d :
+             (sel == 3'b100) ? e :
+             (sel == 3'b101) ? f :
+             (sel == 3'b110) ? g :
+                               h ;
+
+endmodule

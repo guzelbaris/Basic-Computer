@@ -1,0 +1,64 @@
+module ALU (
+    input [W-1:0] AC, DR, // W-bit data inputs
+    input E, // 1-bit input
+    input [2:0] op, // 3-bit operation select input
+    output [W-1:0] res, // W-bit result output
+    output CO, OVF, N, Z // status outputs
+);
+    // specify the data width of the inputs and outputs as a parameter
+    parameter W = 8;
+
+    // specify the logic for the ALU operations
+    always @* begin
+        case (op)
+            3'b000: // add
+                res = AC + DR;
+                CO = (AC[W-1] == DR[W-1]) && (res[W-1] != AC[W-1]);
+                OVF = 0;
+                N = res[W-1];
+                Z = (res == 0);
+            3'b001: // subtract
+                res = AC - DR;
+                CO = (AC[W-1] != DR[W-1]) && (res[W-1] != AC[W-1]);
+                OVF = 0;
+                N = res[W-1];
+                Z = (res == 0);
+            3'b010: // AND
+                res = AC & DR;
+                CO = 0;
+                OVF = 0;
+                N = res[W-1];
+                Z = (res == 0);
+            3'b011: // OR
+                res = AC | DR;
+                CO = 0;
+                OVF = 0;
+                N = res[W-1];
+                Z = (res == 0);
+            3'b100: // XOR
+                res = AC ^ DR;
+                CO = 0;
+                OVF = 0;
+                N = res[W-1];
+                Z = (res == 0);
+            3'b101: // shift left
+                res = AC << DR;
+                CO = res[W] & E;
+                OVF = 0;
+                N = res[W-1];
+                Z = (res == 0);
+            3'b110: // shift right
+                res = AC >> DR;
+                CO = res[0] & E;
+                OVF = 0;
+                N = res[W-1];
+                Z = (res == 0);
+            3'b111: // not
+                res = ~AC;
+                CO = 0;
+                OVF = 0;
+                N = res[W-1];
+                Z = (res == 0);
+        endcase
+    end
+endmodule
